@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class Course 
+class Enrolment 
 {
     use HasFactory;
 
@@ -12,16 +12,10 @@ class Course
      * @var list<string>
      */
     protected $fillable = [
-        'title',
-        'teacher_id',
-        'role',
-        'description',
-        'duration_hours',
-        'content',
-        'start_date',
-        'end_date',
-        'schedule',
-        'is_published',
+        'user_id',
+        'course_id',
+        'enroled_at',
+        'completed',
         'created_at',
         'updated_at'
     ];

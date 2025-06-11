@@ -4,7 +4,6 @@ namespace App\Models;
 
 class Lesson 
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
 
     /**
