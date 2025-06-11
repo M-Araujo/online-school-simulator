@@ -13,10 +13,10 @@
                 </h1>
 
                 <div class="py-12">
-                    @if(auth()->user()->role === 'admin')
+                    @if(auth()->user()->isAdmin())
                     @include('dashboard.partials.admin')
 
-                    @elseif(auth()->user()->role === 'teacher')
+                    @elseif(auth()->user()->isTeacher())
                     @include('dashboard.partials.teacher')
 
                     @else
