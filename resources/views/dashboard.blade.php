@@ -12,20 +12,17 @@
                     Welcome, {{ auth()->user()->name }}!
                 </h1>
 
-
                 <div class="py-12">
                     @if(auth()->user()->role === 'admin')
                     @include('dashboard.partials.admin')
 
-                    @elseif(auth()->user->role === 'teacher')
-                    @include('dashboad.partials.teacher')
+                    @elseif(auth()->user()->role === 'teacher')
+                    @include('dashboard.partials.teacher')
 
                     @else
                     @include('dashboard.partials.student')
                     @endif
                 </div>
-
-
             </div>
         </div>
     </div>
