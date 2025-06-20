@@ -4,13 +4,16 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-// testing, add profile so users cant see 
+
+function createAndActAsAdmin()
+{
+    $admin = User::factory()->create(['role' => 'admin']);
+    test()->actingAs($admin);
+    return $admin;
+}
 
 test('loads the users data', function () {
-
-    $user = User::factory()->create(['role' => 'admin']);
-    $response = $this->actingAs($user);
-
+    createAndActAsAdmin();
     $users = User::factory()->count(3)->create();
     $response = $this->get('/users');
     foreach ($users as $user) {
@@ -22,14 +25,19 @@ test('loads the users data', function () {
 
 test('users index return paginated results', function () {
     User::factory()->count(25)->create();
-
-    $admin = User::factory()->create(['role' => 'admin']);
-    $this->actingAs($admin);
-
-    $response = $this->get('/users');
-    $response->assertSee(User::find(1)->name);
-    $response->assertSee(User::find(10)->name);
-    $response->assertDontSee(User::find(16)->name);
-
-    $response->assertSee('Next');
+    createAndActAsAdmin();
+    $this->get('/users')
+        ->assertSee(User::find(1)->name)
+        ->assertSee(User::find(10)->name)
+        ->assertDontSee(User::find(16)->name)
+        ->assertSee('Next');
 });
+
+/*
+// colocar o middelware nas páginas
+test('teachers should not access this page', function () {
+    $user = User::factory()->create(['role' => 'teacher']);
+    $this->actingAs($user);
+    $response = $this->get('/users');
+    $response->assertForbidden();
+});*/
