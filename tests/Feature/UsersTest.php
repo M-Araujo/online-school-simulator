@@ -18,3 +18,18 @@ test('loads the users data', function () {
     }
     $response->assertStatus(200);
 });
+
+
+test('users index return paginated results', function () {
+    User::factory()->count(25)->create();
+
+    $admin = User::factory()->create(['role' => 'admin']);
+    $this->actingAs($admin);
+
+    $response = $this->get('/users');
+    $response->assertSee(User::find(1)->name);
+    $response->assertSee(User::find(10)->name);
+    $response->assertDontSee(User::find(16)->name);
+
+    $response->assertSee('Next');
+});

@@ -22,6 +22,7 @@
                     </li>
                     @endforeach
                 </ul>
+                {{ $users->links() }}
                 @endif
             </div>
 
