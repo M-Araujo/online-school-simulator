@@ -4,7 +4,7 @@ namespace App\Models;
 
 class Enrolment 
 {
-    use HasFactory;
+
 
     /**
      * The attributes that are mass assignable.
