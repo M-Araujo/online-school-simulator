@@ -2,7 +2,10 @@
 
 namespace App\Models;
 
-class Enrolment 
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+class Enrolment  extends Model
 {
 
 
