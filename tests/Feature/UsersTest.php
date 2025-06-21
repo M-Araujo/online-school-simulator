@@ -12,6 +12,13 @@ function createAndActAsAdmin()
     return $admin;
 }
 
+function createAndActAsTeacher()
+{
+    $teacher = User::factory()->create(['role' => 'teacher']);
+    test()->actingAs($teacher);
+    return $teacher;
+}
+
 test('loads the users data', function () {
     createAndActAsAdmin();
     $users = User::factory()->count(3)->create();
@@ -33,11 +40,10 @@ test('users index return paginated results', function () {
         ->assertSee('Next');
 });
 
-/*
-// colocar o middelware nas páginas
-test('teachers should not access this page', function () {
-    $user = User::factory()->create(['role' => 'teacher']);
-    $this->actingAs($user);
+
+
+test('teachers should not access users page', function () {
+    createAndActAsTeacher();
     $response = $this->get('/users');
-    $response->assertForbidden();
-});*/
+    $response->assertRedirect('/dashboard');
+});
