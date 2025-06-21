@@ -5,27 +5,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 
-function createAndActAsAdmin()
-{
-    $admin = User::factory()->create(['role' => 'admin']);
-    test()->actingAs($admin);
-    return $admin;
-}
-
-function createAndActAsTeacher()
-{
-    $teacher = User::factory()->create(['role' => 'teacher']);
-    test()->actingAs($teacher);
-    return $teacher;
-}
-
-function createAndActAsStudent()
-{
-    $teacher = User::factory()->create(['role' => 'student']);
-    test()->actingAs($teacher);
-    return $teacher;
-}
-
 test('loads the users data', function () {
     createAndActAsAdmin();
     $users = User::factory()->count(3)->create();

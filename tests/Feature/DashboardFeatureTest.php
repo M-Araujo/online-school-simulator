@@ -30,19 +30,19 @@ test('dashboard displays user name', function(){
 });
 
 test('dashboard shows admin partial for admin user', function(){
-    $user = User::factory()->create(['role' => 'admin']);
-    $response = actingAs($user)->get('/dashboard');
+    createAndActAsAdmin();
+    $response = get('/dashboard');
     $response->assertSee('Users Overview');
 });
 
 test('dashboard shows teacher partial for teachers', function(){
-    $user = User::factory()->create(['role' => 'teacher']);
-    $response = actingAs($user)->get('/dashboard');
+    createAndActAsTeacher();
+    $response = get('/dashboard');
     $response->assertSee('Your Progress');
 });
 
 test('dashboard shows studentpartial for students', function(){
-    $user = User::factory()->create(['role' => 'student']);
-    $response = actingAs($user)->get('/dashboard');
+    createAndActAsStudent();
+    $response = get('/dashboard');
     $response->assertSee('Current Courses');
 });
