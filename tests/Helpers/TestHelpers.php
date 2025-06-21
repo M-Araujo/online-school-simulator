@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 
 function createAndActAsAdmin()
 {
@@ -21,4 +22,11 @@ function createAndActAsStudent()
     $teacher = User::factory()->create(['role' => 'student']);
     test()->actingAs($teacher);
     return $teacher;
+}
+
+function createRecords(string $modelClass, int $count = 1, array $attributes = [])
+{
+    return $modelClass::factory()
+        ->count($count)
+        ->create($attributes);
 }

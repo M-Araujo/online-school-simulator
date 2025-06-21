@@ -1,13 +1,10 @@
 <?php
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
-
 
 test('loads the users data', function () {
     createAndActAsAdmin();
-    $users = User::factory()->count(3)->create();
+    $users = createRecords(User::class, 3);
     $response = $this->get('/users');
     foreach ($users as $user) {
         $response->assertSee($user->name);
@@ -15,9 +12,8 @@ test('loads the users data', function () {
     $response->assertStatus(200);
 });
 
-
 test('users index return paginated results', function () {
-    User::factory()->count(25)->create();
+    createRecords(User::class, 25);
     createAndActAsAdmin();
     $this->get('/users')
         ->assertSee(User::find(1)->name)
@@ -26,21 +22,16 @@ test('users index return paginated results', function () {
         ->assertSee('Next');
 });
 
-
-
 test('teachers should not access users page', function () {
     createAndActAsTeacher();
-    $response = $this->get('/users');
-    $response->assertRedirect('/dashboard');
+    $this->get('/users')->assertRedirect('/dashboard');
 });
 
 test('students should not access users page', function () {
     createAndActAsStudent();
-    $response = $this->get('/users');
-    $response->assertRedirect('/dashboard');
+    $this->get('/users')->assertRedirect('/dashboard');
 });
 
 test('unauthorized users should not enter the users page', function () {
-    $response = $this->get('/users');
-    $response->assertRedirect('/login');
+    $this->get('/users')->assertRedirect('/login');
 });
