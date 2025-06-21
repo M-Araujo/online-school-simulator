@@ -23,11 +23,11 @@ test('students are redirected when trying to enter the courses page', function (
 
 test('admins enter the page and see a list of items', function () {
     createAndActAsAdmin();
-    $courses = Course::factory()->count(3)->create();
+    $courses = createRecords(Course::class, 3);
     $response = $this->get('/courses');
 
-    foreach ($courses as $user) {
-        $response->assertSee($user->name);
+    foreach ($courses as $course) {
+        $response->assertSee($course->title)->assertSee($course->description);
     }
     $response->assertStatus(200);
 });

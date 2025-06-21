@@ -2,9 +2,11 @@
 
 namespace Database\Seeders;
 use App\Models\user;
+use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+
 
 class PlatFormUsersSeeder extends Seeder
 {
@@ -14,7 +16,6 @@ class PlatFormUsersSeeder extends Seeder
     public function run(): void
     {
 
-        /*
         User::create([
             'name' => 'Admin User',
             'email' => 'admin@example.com',
@@ -35,8 +36,7 @@ class PlatFormUsersSeeder extends Seeder
             'password' => Hash::make('password'),
             'role' => 'student',
         ]);
-        
-        */
+
         User::factory()->count(10)->create([
             'role' => 'teacher'
         ]);

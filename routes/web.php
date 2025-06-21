@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CourseController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -18,6 +19,7 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware('isAdminMiddleware')->group(function () {
         Route::get('/users', [UserController::class, 'index'])->name('users.index');
+        Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');
     });
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
