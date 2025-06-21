@@ -19,6 +19,13 @@ function createAndActAsTeacher()
     return $teacher;
 }
 
+function createAndActAsStudent()
+{
+    $teacher = User::factory()->create(['role' => 'student']);
+    test()->actingAs($teacher);
+    return $teacher;
+}
+
 test('loads the users data', function () {
     createAndActAsAdmin();
     $users = User::factory()->count(3)->create();
@@ -46,4 +53,15 @@ test('teachers should not access users page', function () {
     createAndActAsTeacher();
     $response = $this->get('/users');
     $response->assertRedirect('/dashboard');
+});
+
+test('students should not access users page', function () {
+    createAndActAsStudent();
+    $response = $this->get('/users');
+    $response->assertRedirect('/dashboard');
+});
+
+test('unauthorized users should not enter the users page', function () {
+    $response = $this->get('/users');
+    $response->assertRedirect('/login');
 });
