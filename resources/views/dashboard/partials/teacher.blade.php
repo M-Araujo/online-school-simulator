@@ -1,30 +1,53 @@
 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
 
-    <x-dashboard.card title="Your Progress">
-        <p class="text-sm">Courses Enrolled: 3</p>
-        <p class="text-sm">Lessons Completed: 18</p>
-        <p class="text-sm">Quizzes Passed: 5</p>
-        <p class="text-sm">Avg. Score: 87%</p>
+    {{-- Courses Overview --}}
+    <x-dashboard.card title="Your Courses">
+        <p class="text-sm">Active: 3</p>
+        <p class="text-sm">Drafts: 1</p>
+        <p class="text-sm">Completed: 2</p>
+        <p class="text-sm">Upcoming: 1</p>
+        <a href="#" class="text-blue-500 hover:underline mt-2 inline-block text-sm">
+            Manage Courses
+        </a>
     </x-dashboard.card>
 
-    <x-dashboard.card title="Continue Learning">
-        <p class="text-sm">Next Lesson: Laravel Basics - “Blade Templates”</p>
-        <p class="text-sm">Due: June 15</p>
-        <a href="#" class="text-blue-500 hover:underline mt-2 inline-block text-sm">Resume Course</a>
+    {{-- Student Engagement --}}
+    <x-dashboard.card title="Student Activity">
+        <p class="text-sm">Total Students: 86</p>
+        <p class="text-sm">Assignments Pending Review: 5</p>
+        <p class="text-sm">Discussions This Week: 12</p>
+        <a href="#" class="text-blue-500 hover:underline mt-2 inline-block text-sm">
+            View Student Insights
+        </a>
     </x-dashboard.card>
 
-    <x-dashboard.card title="Upcoming Quizzes">
-        <p class="text-sm">Quiz: "Blade Components" – Due in 2 days</p>
-        <p class="text-sm">Quiz: "Laravel Routing" – Not started</p>
-        <a href="#" class="text-blue-500 hover:underline mt-2 inline-block text-sm">View All Quizzes</a>
+    {{-- Upcoming Tasks --}}
+    <x-dashboard.card title="Upcoming Tasks">
+        <p class="text-sm">Grade Quiz: "Laravel Basics" (Due Today)</p>
+        <p class="text-sm">Review Lesson: "Blade Components"</p>
+        <p class="text-sm">Prepare Course: "Livewire Mastery" (Starts Next Week)</p>
+        <a href="#" class="text-blue-500 hover:underline mt-2 inline-block text-sm">
+            View All Tasks
+        </a>
     </x-dashboard.card>
 
-    <x-dashboard.card title="Activity Log">
+    {{-- Quick Actions --}}
+    <x-dashboard.card title="Quick Actions">
         <ul class="text-sm list-disc list-inside">
-            <li>Completed: "Lesson 5 – Blade Basics"</li>
-            <li>Passed Quiz: "Laravel Controllers"</li>
-            <li>Earned: “Intermediate Learner” Badge</li>
+            <li><a href="#" class="text-blue-500 hover:underline">Create New Course</a></li>
+            <li><a href="#" class="text-blue-500 hover:underline">Upload New Lesson</a></li>
+            <li><a href="#" class="text-blue-500 hover:underline">Enter Grades</a></li>
         </ul>
-        <a href="#" class="text-blue-500 hover:underline mt-2 inline-block text-sm">View Full History</a>
     </x-dashboard.card>
+
+    {{-- Performance Overview --}}
+    <x-dashboard.card title="Performance Overview">
+        <p class="text-sm">Avg. Course Completion: 78%</p>
+        <p class="text-sm">Avg. Quiz Score: 82%</p>
+        <p class="text-sm">Feedback Rating: 4.6/5</p>
+        <a href="#" class="text-blue-500 hover:underline mt-2 inline-block text-sm">
+            View Analytics
+        </a>
+    </x-dashboard.card>
+
 </div>
