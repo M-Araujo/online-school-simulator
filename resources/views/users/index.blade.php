@@ -9,19 +9,11 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
                 <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Users List</h3>
 
-                @if($users->isEmpty())
-                <p class="text-gray-500 dark:text-gray-400">No users found.</p>
-                @else
-                <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
-                    @foreach($users as $user)
-                    <li class="py-2 flex justify-between items-center">
-                        <span class="text-gray-900 dark:text-gray-100">{{ $user->name }}</span>
-                        <span class="text-gray-500 dark:text-gray-400 text-sm">{{ $user->email }}</span>
-                    </li>
-                    @endforeach
-                </ul>
-                {{ $users->links() }}
-                @endif
+                <x-listing
+                    :items="$items"
+                    :headers="['Title', 'Description']"
+                    empty="No items found."
+                    :row="fn($items) => view('users.partials.row', ['item' => $items])->render()" />
             </div>
 
         </div>

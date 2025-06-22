@@ -10,10 +10,10 @@
                 <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Courses List</h3>
 
                 <x-listing
-                    :items="$courses"
+                    :items="$items"
                     :headers="['Title', 'Description']"
-                    empty="No course found."
-                    :row="fn($course) => view('courses.partials.row', ['course' => $course])->render()" />
+                    empty="No items found."
+                    :row="fn($item) => view('courses.partials.row', ['item' => $item])->render()" />
             </div>
         </div>
     </div>
