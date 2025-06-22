@@ -1,8 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Users
-        </h2>
+        <x-page-title title="Users"></x-page-title>
     </x-slot>
 
     <div class="py-12">
