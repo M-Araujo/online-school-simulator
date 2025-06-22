@@ -75,7 +75,8 @@ test('admin sees the stats of the course overview', function() {
         'start_date' => now()->subWeek(),
         'end_date' => now()->addWeek(),
     ]);
-    $response = get('/dashboard')
+
+    get('/dashboard')
         ->assertSee('Active Courses: 10')
         ->assertSee('Pending Approvals: 2');
 });
