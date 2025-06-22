@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use App\Models\Course;
 
 function createAndActAsAdmin()
 {
@@ -26,4 +27,14 @@ function createAndActAsStudent()
 function createRecords(string $modelClass, int $count = 1, array $attributes = [])
 {
     return $modelClass::factory()->count($count)->create($attributes);
+}
+
+function createCoursesForTeacher(User $teacher, int $count, array $overrides = [])
+{
+    Course::factory()->count(2)->create([
+        'teacher_id' => $teacher->id,
+        'is_published' => true,
+        'start_date' => now()->subWeek(),
+        'end_date' => now()->addWeek(),
+    ]);
 }

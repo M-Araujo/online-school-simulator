@@ -3,7 +3,7 @@
     {{-- Courses Overview --}}
     <x-dashboard.card title="Your Courses">
         <p class="text-sm">Active: 3</p>
-        <p class="text-sm">Drafts: 1</p>
+        <p class="text-sm">Pending: 1</p>
         <p class="text-sm">Completed: 2</p>
         <p class="text-sm">Upcoming: 1</p>
         <a href="#" class="text-blue-500 hover:underline mt-2 inline-block text-sm">
