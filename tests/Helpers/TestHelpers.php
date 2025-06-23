@@ -31,10 +31,10 @@ function createRecords(string $modelClass, int $count = 1, array $attributes = [
 
 function createCoursesForTeacher(User $teacher, int $count, array $overrides = [])
 {
-    Course::factory()->count(2)->create([
+    return Course::factory()->count($count)->create(array_merge([
         'teacher_id' => $teacher->id,
         'is_published' => true,
         'start_date' => now()->subWeek(),
         'end_date' => now()->addWeek(),
-    ]);
+    ], $overrides));
 }

@@ -12,7 +12,7 @@
 
     {{-- Student Engagement --}}
     <x-dashboard.card title="Student Activity">
-        <p class="text-sm">Total Students: 86</p>
+        <p class="text-sm">Students Across All Courses: 86</p>
         <p class="text-sm">Assignments Pending Review: 5</p>
         <p class="text-sm">Discussions This Week: 12</p>
         <a href="#" class="text-blue-500 hover:underline mt-2 inline-block text-sm">

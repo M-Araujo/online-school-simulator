@@ -11,14 +11,14 @@ test('loads the course data for admin users', function () {
     $this->get('/courses')->assertStatus(200);
 });
 
-test('teachers are redirected when trying to enter the courses page', function () {
+test('loads the course data for teacher users', function () {
     createAndActAsTeacher();
-    $this->get('courses')->assertRedirect('/dashboard');
+    $this->get('/courses')->assertStatus(200);
 });
 
-test('students are redirected when trying to enter the courses page', function () {
+test('loads the course data for students users', function () {
     createAndActAsStudent();
-    $this->get('courses')->assertRedirect('/dashboard');
+    $this->get('/courses')->assertStatus(200);
 });
 
 test('admins enter the page and see a list of items', function () {

@@ -30,7 +30,8 @@ test('teacher dashboard displays correct course stats', function () {
 
     // pending courses
     createCoursesForTeacher($teacher, 1, [
-        'is_published' => false
+        'is_published' => false,
+        'start_date' => now()->addDay(),
     ]);
 
     // passed and closed courses

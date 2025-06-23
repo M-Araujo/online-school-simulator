@@ -29,5 +29,13 @@ class Course extends Model
         'updated_at'
     ];
 
-  
+    public function teacher()
+    {
+        return $this->belongsTo(User::class, 'teacher_id');
+    }
+
+    public function enrolledStudents()
+    {
+        return $this->hasMany(User::class, 'user_id');
+    }
 }

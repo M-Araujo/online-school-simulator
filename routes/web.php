@@ -19,8 +19,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::middleware('isAdminMiddleware')->group(function () {
         Route::get('/users', [UserController::class, 'index'])->name('users.index');
-        Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');
     });
+
+    Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

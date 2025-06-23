@@ -47,7 +47,6 @@ class User extends Authenticatable
         ];
     }
 
-
     public function isAdmin(){
         return $this->role === 'admin';
     }
@@ -58,5 +57,22 @@ class User extends Authenticatable
 
     public function isStudent(){
         return $this->role === 'student';
+    }
+
+    public function teachingCourses(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Course::class, 'teacher_id');
+    }
+
+    public function allEnrolledCourses()
+    {
+        return $this->hasMany(Enrollment::class, 'user_id');
+    }
+
+
+    public function upcomingEnrolledCourses()
+    {
+        // add a where condition here
+        return $this->hasMany(Enrollment::class, 'user_id');
     }
 }

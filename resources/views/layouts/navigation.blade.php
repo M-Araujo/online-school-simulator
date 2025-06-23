@@ -16,13 +16,14 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
+                    <x-nav-link :href="route('courses.index')" :active="request()->routeIs('admin.courses')">
+                        {{ __('Courses') }}
+                    </x-nav-link>
                     @if(Auth::user()->role === 'admin')
                     <x-nav-link :href="route('users.index')" :active="request()->routeIs('admin.users')">
                         {{ __('Users') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('courses.index')" :active="request()->routeIs('admin.courses')">
-                        {{ __('Courses') }}
-                    </x-nav-link>
+
                     @elseif(Auth::user()->role === 'teacher')
                     <x-nav-link :active="request()->routeIs('teacher.courses')">
                         {{ __('My Courses') }}
