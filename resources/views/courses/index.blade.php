@@ -9,7 +9,7 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
                 <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Courses List</h3>
 
-                <x-listing
+                <x-card
                     :items="$items"
                     :headers="['Title', 'Description']"
                     empty="No items found."

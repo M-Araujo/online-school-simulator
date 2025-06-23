@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Course;
+use Illuminate\Support\Str;
 
 test('unauthenticated users are redirected to login when entering the url', function () {
     $this->get('/courses')->assertRedirect('/login');
@@ -27,8 +28,11 @@ test('admins enter the page and see a list of items', function () {
     $response = $this->get('/courses');
 
     foreach ($courses as $course) {
-        $response->assertSee($course->title)->assertSee($course->description);
+        $response->assertSee($course->title);
+        $response->assertSee(Str::limit($course->description, 100));
     }
+
+    $response->assertSee('course-card');
     $response->assertStatus(200);
 });
 

@@ -7,7 +7,7 @@ use App\Models\Course;
 class CourseController extends Controller
 {
     public function index(){
-        $items = Course::paginate(10);
+        $items = Course::paginate(6);
         return view('courses.index')->with(compact('items'));
     }
 }
