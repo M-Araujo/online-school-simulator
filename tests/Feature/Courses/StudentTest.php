@@ -8,7 +8,7 @@ test('students should be able to see the enroll button', function () {
 
     createRecords(Course::class, 3);
     $response = $this->get('/courses')->assertStatus(200);
-    $response->assertSee('Enroll Now', escape: false);
+    $response->assertSee('Details', escape: false);
 });
 
 

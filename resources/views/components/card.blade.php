@@ -23,8 +23,8 @@
             </div>
 
             <div class="mt-auto">
-                <a  class="inline-block bg-blue-600 text-white text-sm font-medium px-4 py-2 rounded hover:bg-blue-700 transition">
-                    Enroll Now
+                <a class="inline-block bg-blue-600 text-white text-sm font-medium px-4 py-2 rounded hover:bg-blue-700 transition">
+                    Details
                 </a>
             </div>
         </div>
