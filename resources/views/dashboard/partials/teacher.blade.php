@@ -1,11 +1,10 @@
 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
 
-    {{-- Courses Overview --}}
     <x-dashboard.card title="Your Courses">
-        <p class="text-sm">Active: 3</p>
-        <p class="text-sm">Pending: 1</p>
-        <p class="text-sm">Completed: 2</p>
-        <p class="text-sm">Upcoming: 1</p>
+        <p class="text-sm">Active: {{$dashboardStats['activeCourses']}}</p>
+        <p class="text-sm">Pending: {{$dashboardStats['pendingCourses']}}</p>
+        <p class="text-sm">Completed: {{$dashboardStats['completedCourses']}}</p>
+        <p class="text-sm">Upcoming: {{$dashboardStats['upcomingCourses']}}</p>
         <a href="#" class="text-blue-500 hover:underline mt-2 inline-block text-sm">
             Manage Courses
         </a>
