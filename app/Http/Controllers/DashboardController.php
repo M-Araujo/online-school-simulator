@@ -7,17 +7,10 @@ use App\Services\DashboardService;
 use Illuminate\Support\Facades\Auth;
 
 
-class DashboardController extends Controller
-{
-    public function index()
-    {
+class DashboardController extends Controller {
+    public function index() {
         $dashboardService = new DashboardService;
         $dashboardStats = $dashboardService->getStatsFor(Auth::user());
         return view('dashboard')->with(compact('dashboardStats'));
-    }
-
-    public function teste()
-    {
-        dd();
     }
 }

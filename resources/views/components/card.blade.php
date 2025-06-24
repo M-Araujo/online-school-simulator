@@ -23,7 +23,7 @@
             </div>
 
             <div class="mt-auto">
-                <a class="inline-block bg-blue-600 text-white text-sm font-medium px-4 py-2 rounded hover:bg-blue-700 transition">
+                <a href="{{route('courses.show',$item->slug)}}" class="inline-block bg-blue-600 text-white text-sm font-medium px-4 py-2 rounded hover:bg-blue-700 transition">
                     Details
                 </a>
             </div>

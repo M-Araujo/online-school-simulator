@@ -1,0 +1,51 @@
+<x-app-layout>
+    <x-slot name="header">
+        <x-page-title title="Course Details" />
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
+                <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Courses List</h3>
+
+                {{-- Title --}}
+                <h2 class="text-4xl font-bold text-gray-900 dark:text-white tracking-tight">
+                    {{ $item->title }}
+                </h2>
+
+                {{-- Description --}}
+                @if (!empty($item->description))
+                <div class="space-y-2">
+                    <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300">Description</h3>
+                    <p class="text-base text-gray-600 dark:text-gray-400 leading-relaxed">
+                        {{ $item->description }}
+                    </p>
+                </div>
+                @endif
+
+                {{-- Course Dates --}}
+                <div class="pt-6 border-t border-gray-200 dark:border-gray-700 space-y-2">
+                    <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300">Schedule</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                        <strong class="text-gray-700 dark:text-gray-300">Starts:</strong> {{ $item->start_date->format('F j, Y') }}
+                    </p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                        <strong class="text-gray-700 dark:text-gray-300">Ends:</strong> {{ $item->end_date->format('F j, Y') }}
+                    </p>
+                </div>
+
+                {{-- Enroll Button --}}
+                @if(auth()->user()?->isStudent() && isUpcomingCourse($item))
+                <form method="POST" class="pt-8 border-t border-gray-200 dark:border-gray-700">
+                    @csrf
+                    <button type="submit" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm px-6 py-3 rounded-xl shadow-lg transition-all duration-200">
+                        Enroll Now
+                    </button>
+                </form>
+                @endif
+
+            </div>
+        </div>
+    </div>
+</x-app-layout>

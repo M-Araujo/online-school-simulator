@@ -16,6 +16,7 @@ class Course extends Model {
      */
     protected $fillable = [
         'title',
+        'slug',
         'teacher_id',
         'role',
         'description',
@@ -40,6 +41,11 @@ class Course extends Model {
             }
         });
     }
+
+    protected $casts = [
+        'start_date' => 'datetime',
+        'end_date' => 'datetime',
+    ];
 
     public function getRouteKeyName() {
         return 'slug';
