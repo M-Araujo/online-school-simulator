@@ -9,9 +9,15 @@ use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $dashboardService = new DashboardService;
         $dashboardStats = $dashboardService->getStatsFor(Auth::user());
         return view('dashboard')->with(compact('dashboardStats'));
+    }
+
+    public function teste()
+    {
+        dd();
     }
 }

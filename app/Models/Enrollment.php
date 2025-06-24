@@ -5,8 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Enrollment  extends Model
-{
+class Enrollment  extends Model {
 
 
     /**
@@ -22,6 +21,4 @@ class Enrollment  extends Model
         'created_at',
         'updated_at'
     ];
-
-  
 }

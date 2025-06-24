@@ -7,8 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
-{
+class User extends Authenticatable {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
@@ -39,15 +38,14 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
-    protected function casts(): array
-    {
+    protected function casts(): array {
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
     }
 
-    public function isAdmin(){
+    public function isAdmin() {
         return $this->role === 'admin';
     }
 
@@ -55,23 +53,20 @@ class User extends Authenticatable
         return $this->role === 'teacher';
     }
 
-    public function isStudent(){
+    public function isStudent() {
         return $this->role === 'student';
     }
 
-    public function teachingCourses(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
+    public function teachingCourses(): \Illuminate\Database\Eloquent\Relations\HasMany {
         return $this->hasMany(Course::class, 'teacher_id');
     }
 
-    public function allEnrolledCourses()
-    {
+    public function allEnrolledCourses() {
         return $this->hasMany(Enrollment::class, 'user_id');
     }
 
 
-    public function upcomingEnrolledCourses()
-    {
+    public function upcomingEnrolledCourses() {
         // add a where condition here
         return $this->hasMany(Enrollment::class, 'user_id');
     }

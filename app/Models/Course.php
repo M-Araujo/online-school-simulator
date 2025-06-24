@@ -6,8 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class Course extends Model
-{
+class Course extends Model {
     use HasFactory;
 
     /**
@@ -30,8 +29,7 @@ class Course extends Model
         'updated_at'
     ];
 
-    protected static function booted()
-    {
+    protected static function booted() {
         static::creating(function ($course) {
             $course->slug = Str::slug($course->title);
         });
@@ -43,18 +41,15 @@ class Course extends Model
         });
     }
 
-    public function getRouteKeyName()
-    {
+    public function getRouteKeyName() {
         return 'slug';
     }
 
-    public function teacher()
-    {
+    public function teacher() {
         return $this->belongsTo(User::class, 'teacher_id');
     }
 
-    public function enrolledStudents()
-    {
+    public function enrolledStudents() {
         return $this->hasMany(User::class, 'user_id');
     }
 }
