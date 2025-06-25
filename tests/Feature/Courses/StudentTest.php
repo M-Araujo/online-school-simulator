@@ -25,12 +25,25 @@ test('student sees the correct link to course details', function () {
 });
 
 test('student access the course details page', function () {
-
     createAndActAsStudent();
-
     $course = createRecords(Course::class, 1);
-
     $this->get(route('courses.show', $course->first()->slug))->assertSee($course->first()->title);
 });
 
 // todo ver se os outros perfis vem isto ou não 
+
+
+test('student sees their enrolled courses list', function () {
+    $student = createAndActAsStudent();
+    $courses = createRecords(Course::class, 4);
+
+    enrollStudentInCourses($student, $courses);
+
+    $response = $this->get('/my-courses')
+        ->assertStatus(200)
+        ->assertSee('My courses');
+
+    assertCoursesVisible($response, $courses);
+});
+
+// todo add test when no courses exist
