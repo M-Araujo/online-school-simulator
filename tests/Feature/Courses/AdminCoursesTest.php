@@ -22,5 +22,5 @@ test('loads the course data for admin users', function () {
 
 test('guarantees the admin cannot see the my courses page', function () {
     createAndActAsAdmin();
-    $this->get('/my-courses')->assertRedirect('/dashboard');
+    $this->get('/student-courses')->assertRedirect('/dashboard');
 });

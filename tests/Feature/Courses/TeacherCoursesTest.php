@@ -11,5 +11,5 @@ test('loads the course data for teacher users', function () {
 
 test('guarantees the teacher cannot see the my courses page', function () {
     createAndActAsTeacher();
-    $this->get('/my-courses')->assertRedirect('/dashboard');
+    $this->get('/student-courses')->assertRedirect('/dashboard');
 });
