@@ -7,7 +7,6 @@ uses(RefreshDatabase::class);
 
 
 test('students should be able to see the enroll button', function () {
-
     createRecords(Course::class, 3);
     createAndActAsStudent();
 
@@ -16,7 +15,6 @@ test('students should be able to see the enroll button', function () {
 });
 
 test('student sees the correct link to course details', function () {
-
     createAndActAsStudent();
 
     $course = createRecords(Course::class, 1);
@@ -53,5 +51,3 @@ test('loads the course data for students users', function () {
 
 
 // todo add test when no courses exist
-
-//Confirm the student cannot see courses they aren’t enrolled in

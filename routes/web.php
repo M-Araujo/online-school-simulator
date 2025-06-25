@@ -21,6 +21,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/users', [UserController::class, 'index'])->name('users.index');
     });
 
+    Route::middleware('isStudentMiddleware')->group(function () {
+        Route::get('/my-courses', [CourseController::class, 'index'])->name('courses.index');
+    });
+
     Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');
     Route::get('/courses/{course:slug}', [CourseController::class, 'show'])->name('courses.show');
 
@@ -29,4 +33,4 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

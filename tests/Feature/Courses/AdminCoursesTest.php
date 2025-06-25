@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\Course;
-use Illuminate\Support\Str;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
@@ -9,18 +8,19 @@ uses(RefreshDatabase::class);
 test('admins enter the page and see a list of items', function () {
     createAndActAsAdmin();
     $courses = createRecords(Course::class, 3);
-    $response = $this->get('/courses');
+    $response = $this->get('/courses')
+        ->assertStatus(200)
+        ->assertSee('course-card');
 
-    foreach ($courses as $course) {
-        $response->assertSee($course->title);
-        $response->assertSee(Str::limit($course->description, 100));
-    }
-
-    $response->assertSee('course-card');
-    $response->assertStatus(200);
+    assertCoursesVisible($response, $courses);
 });
 
 test('loads the course data for admin users', function () {
     createAndActAsAdmin();
     $this->get('/courses')->assertStatus(200);
+});
+
+test('guarantees the admin cannot see the my courses page', function () {
+    createAndActAsAdmin();
+    $this->get('/my-courses')->assertRedirect('/dashboard');
 });

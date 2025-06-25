@@ -3,15 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use Illuminate\Contracts\View\View;
 
 class CourseController extends Controller {
-    public function index() {
+    public function index(): View {
         $items = Course::paginate(6);
         return view('courses.index')->with(compact('items'));
     }
 
-    public function show($slug) {
+    public function show(string $slug): View {
         $item = Course::where('slug', $slug)->firstOrFail();
         return view('courses.show')->with(compact('item'));
+    }
+
+    public function studentCourses(): View {
+        return view('courses.student-courses');
     }
 }

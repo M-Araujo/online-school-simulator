@@ -1,0 +1,1 @@
+this is the student courses page
