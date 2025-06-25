@@ -1,6 +1,9 @@
 <?php
 
 use App\Models\Course;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+uses(RefreshDatabase::class);
 
 
 test('students should be able to see the enroll button', function () {
@@ -30,9 +33,6 @@ test('student access the course details page', function () {
     $this->get(route('courses.show', $course->first()->slug))->assertSee($course->first()->title);
 });
 
-// todo ver se os outros perfis vem isto ou não 
-
-
 test('student sees their enrolled courses list', function () {
     $student = createAndActAsStudent();
     $courses = createRecords(Course::class, 4);
@@ -46,4 +46,12 @@ test('student sees their enrolled courses list', function () {
     assertCoursesVisible($response, $courses);
 });
 
+test('loads the course data for students users', function () {
+    createAndActAsStudent();
+    $this->get('/courses')->assertStatus(200);
+});
+
+
 // todo add test when no courses exist
+
+//Confirm the student cannot see courses they aren’t enrolled in
