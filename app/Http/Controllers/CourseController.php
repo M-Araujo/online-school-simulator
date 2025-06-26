@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Auth;
 
 class CourseController extends Controller {
     public function index(): View {
@@ -17,6 +18,8 @@ class CourseController extends Controller {
     }
 
     public function studentCourses(): View {
-        return view('courses.student-courses');
+        $user = Auth::user();
+        $items = $user->enrolledCourses;
+        return view('courses.student-courses')->with(compact('items'));
     }
 }

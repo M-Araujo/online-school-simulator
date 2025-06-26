@@ -1,14 +1,45 @@
 <x-app-layout>
     <x-slot name="header">
-        <x-page-title title="Course Details" />
+        <x-page-title title="My Courses" />
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
 
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
-                <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">My courses</h3>
+                <h3 class="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-6">
+                    My Courses
+                </h3>
+
+                @if($items->count() > 0)
+                    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                        @foreach($items as $item)
+                            <div class="bg-gray-50 dark:bg-gray-900 rounded-xl p-4 shadow hover:shadow-md transition">
+                                <h4 class="text-lg font-bold text-gray-800 dark:text-gray-100 mb-2">
+                                    {{ $item->title }}
+                                </h4>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">
+                                    {{ Str::limit($item->description, 100) }}
+                                </p>
+
+                                <div class="mt-4">
+                                    <a href="{{ route('courses.show', $item->id) }}"
+                                       class="text-sm text-indigo-600 dark:text-indigo-400 hover:underline">
+                                        View Course →
+                                    </a>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                @else
+                    <div class="text-center py-12">
+                        <p class="text-gray-600 dark:text-gray-400 text-lg">
+                            You’re not enrolled in any courses yet.
+                        </p>
+                    </div>
+                @endif
             </div>
+
         </div>
     </div>
 </x-app-layout>

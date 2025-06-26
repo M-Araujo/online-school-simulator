@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Enrollment  extends Model {
 
-
+    use HasFactory;
     /**
      * The attributes that are mass assignable.
      *

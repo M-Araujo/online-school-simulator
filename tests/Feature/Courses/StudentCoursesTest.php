@@ -37,9 +37,9 @@ test('student sees their enrolled courses list', function () {
 
     enrollStudentInCourses($student, $courses);
 
-    $response = $this->get('/my-courses')
+    $response = $this->get('/student-courses')
         ->assertStatus(200)
-        ->assertSee('My courses');
+        ->assertSee('My Courses');
 
     assertCoursesVisible($response, $courses);
 });

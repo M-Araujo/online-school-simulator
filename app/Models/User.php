@@ -45,15 +45,15 @@ class User extends Authenticatable {
         ];
     }
 
-    public function isAdmin() {
+    public function isAdmin(): bool {
         return $this->role === 'admin';
     }
 
-    public function isTeacher() {
+    public function isTeacher(): bool {
         return $this->role === 'teacher';
     }
 
-    public function isStudent() {
+    public function isStudent(): bool {
         return $this->role === 'student';
     }
 
@@ -61,13 +61,13 @@ class User extends Authenticatable {
         return $this->hasMany(Course::class, 'teacher_id');
     }
 
-    public function allEnrolledCourses() {
-        return $this->hasMany(Enrollment::class, 'user_id');
+    public function enrolledCourses(): \Illuminate\Database\Eloquent\Relations\BelongsToMany {
+        return $this->belongsToMany(Course::class, 'enrollments');
     }
 
-
-    public function upcomingEnrolledCourses() {
-        // add a where condition here
-        return $this->hasMany(Enrollment::class, 'user_id');
+    public function upcomingEnrolledCourses(): \Illuminate\Database\Eloquent\Relations\HasMany {
+        return $this->enrolledCourses()->whereHas('course', function ($query) {
+            $query->where('start_date', '>', now());
+        });
     }
 }
