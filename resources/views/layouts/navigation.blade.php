@@ -32,7 +32,7 @@
                         {{ __('Create Lesson') }}
                     </x-nav-link>
                     @elseif(Auth::user()->role === 'student')
-                    <x-nav-link :href="route('student-courses')" :active="request()->routeIs('student.courses')">
+                    <x-nav-link :href="route('student.courses')" :active="request()->routeIs('student.courses')">
                         {{ __('My Courses') }}
                     </x-nav-link>
                     <x-nav-link :active="request()->routeIs('student.quizzes')">

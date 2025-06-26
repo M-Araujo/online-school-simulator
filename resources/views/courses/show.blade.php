@@ -35,10 +35,10 @@
                     </p>
                 </div>
 
-                {{-- Enroll Button --}}
                 @if(auth()->user()?->isStudent() && isUpcomingCourse($item))
-                <form method="POST" class="pt-8 border-t border-gray-200 dark:border-gray-700">
+                <form method="POST" action="{{ route('enrollments.store') }}" class="pt-8 border-t border-gray-200 dark:border-gray-700">
                     @csrf
+                    <input type="hidden" name="course_id" value={{$item->id}}>
                     <button type="submit" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm px-6 py-3 rounded-xl shadow-lg transition-all duration-200">
                         Enroll Now
                     </button>

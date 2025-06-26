@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\Enrollment;
+use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,5 +23,12 @@ class CourseController extends Controller {
         $user = Auth::user();
         $items = $user->enrolledCourses;
         return view('courses.student-courses')->with(compact('items'));
+    }
+
+    public function enrollStudent(Request $request) {
+
+        $user = Auth::user();
+        $data = Enrollment::create(['user_id' => $user->id, 'course_id' => $request->input('course_id')]);
+        return redirect()->back();
     }
 }

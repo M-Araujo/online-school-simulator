@@ -27,7 +27,9 @@ test('student sees the correct link to course details', function () {
 
 test('student access the course details page', function () {
     createAndActAsRole('student');
+
     $course = createRecords(Course::class, 1);
+
     $this->get(route('courses.show', $course->first()->slug))->assertSee($course->first()->title);
 });
 
@@ -46,18 +48,31 @@ test('student sees their enrolled courses list', function () {
 
 test('loads the course data for students users', function () {
     createAndActAsRole('student');
+
     $this->get('/courses')->assertStatus(200);
 });
 
 
 test('student enrols a course', function () {
-    createAndActAsRole('student');
+    $student = createAndActAsRole('student');
+    $course = createUpcomingCourse();
+
     $this->get('/courses')->assertStatus(200);
 
-    $course = createUpcomingCourse();
-    $this->get(route('courses.show', $course->first()->slug))
-        ->assertSee($course->first()->title)
+    $this->get(route('courses.show', $course->slug))
+        ->assertSee($course->title)
         ->assertSee('Enroll Now');
+
+    $response = $this->post(route('enrollments.store'), [
+        'course_id' => $course->id,
+    ]);
+
+    $response->assertRedirect(route('courses.show', $course->slug));
+
+    $this->assertDatabaseHas('enrollments', [
+        'user_id' => $student->id,
+        'course_id' => $course->id,
+    ]);
 });
 
 // todo add test when no courses exist
