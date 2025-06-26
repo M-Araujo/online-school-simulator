@@ -6,11 +6,9 @@ use App\Models\User;
 use App\Models\Course;
 use Illuminate\Support\Facades\DB;
 
-class DashboardService
-{
+class DashboardService {
 
-    function getAdminStats()
-    {
+    function getAdminStats() {
         $userCounts = User::select('role', DB::raw('count(*) as total'))
             ->groupBy('role')
             ->pluck('total', 'role');
@@ -24,12 +22,11 @@ class DashboardService
             'teachersCount' =>  $userCounts->get('teacher', 0),
             'adminsCount' =>  $userCounts->get('admin', 0),
             'activeCourses' =>  $coursesCounts->get(1, 0),
-            'endingApprovals' =>  $coursesCounts->get(0, 0)
+            'pendingApprovals' =>  $coursesCounts->get(0, 0)
         ];
     }
 
-    function getTeacherStats($user)
-    {
+    function getTeacherStats($user) {
         $activeCourses = 0;
         $pendingCourses = 0;
         $completedCourses = 0;
@@ -63,8 +60,7 @@ class DashboardService
     }
 
 
-    function getStatsFor($user)
-    {
+    function getStatsFor($user) {
         if ($user->isAdmin()) {
             return $this->getAdminStats();
         } else if ($user->isTeacher()) {

@@ -28,6 +28,3 @@ test('dashboard displays user name', function () {
     $response = actingAs($user)->get('/dashboard');
     $response->assertSee('Welcome, John Doe!');
 });
-
-
-

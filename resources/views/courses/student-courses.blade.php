@@ -14,21 +14,19 @@
                 @if($items->count() > 0)
                     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                         @foreach($items as $item)
-                            <div class="bg-gray-50 dark:bg-gray-900 rounded-xl p-4 shadow hover:shadow-md transition">
-                                <h4 class="text-lg font-bold text-gray-800 dark:text-gray-100 mb-2">
-                                    {{ $item->title }}
-                                </h4>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">
-                                    {{ Str::limit($item->description, 100) }}
-                                </p>
+                        <x-widget-card title="{{ $item->title }}">
+                            <p class="text-sm text-gray-600 dark:text-gray-400">
+                                {{ Str::limit($item->description, 100) }}
+                            </p>
 
-                                <div class="mt-4">
-                                    <a href="{{ route('courses.show', $item->id) }}"
-                                       class="text-sm text-indigo-600 dark:text-indigo-400 hover:underline">
-                                        View Course →
-                                    </a>
-                                </div>
+                            <div class="mt-4">
+                                <a href="{{ route('courses.show', $item->id) }}"
+                                   class="text-sm text-indigo-600 dark:text-indigo-400 hover:underline">
+                                    View Course →
+                                </a>
                             </div>
+                        </x-widget-card>
+                           
                         @endforeach
                     </div>
                 @else
