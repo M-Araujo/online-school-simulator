@@ -13,14 +13,14 @@ use function Pest\Laravel\get;
 uses(RefreshDatabase::class);
 
 test('dashboard shows teacher partial for teachers', function () {
-    createAndActAsTeacher();
+    createAndActAsRole('teacher');
     $response = get('/dashboard');
     $response->assertSee('Your Courses');
 });
 
 test('teacher dashboard displays correct course stats', function () {
 
-    $teacher = createAndActAsTeacher();
+    $teacher = createAndActAsRole('teacher');
 
     // active courses
     createCoursesForTeacher($teacher, 2, [

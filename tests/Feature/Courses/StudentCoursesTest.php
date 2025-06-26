@@ -8,14 +8,14 @@ uses(RefreshDatabase::class);
 
 test('students should be able to see the enroll button', function () {
     createRecords(Course::class, 3);
-    createAndActAsStudent();
+    createAndActAsRole('student');
 
     $response = $this->get('/courses')->assertStatus(200);
     $response->assertSee('Details', escape: false);
 });
 
 test('student sees the correct link to course details', function () {
-    createAndActAsStudent();
+    createAndActAsRole('student');
 
     $course = createRecords(Course::class, 1);
     $detailsUrl = route('courses.show', $course->first()->slug);
@@ -26,13 +26,13 @@ test('student sees the correct link to course details', function () {
 });
 
 test('student access the course details page', function () {
-    createAndActAsStudent();
+    createAndActAsRole('student');
     $course = createRecords(Course::class, 1);
     $this->get(route('courses.show', $course->first()->slug))->assertSee($course->first()->title);
 });
 
 test('student sees their enrolled courses list', function () {
-    $student = createAndActAsStudent();
+    $student = createAndActAsRole('student');
     $courses = createRecords(Course::class, 4);
 
     enrollStudentInCourses($student, $courses);
@@ -45,9 +45,19 @@ test('student sees their enrolled courses list', function () {
 });
 
 test('loads the course data for students users', function () {
-    createAndActAsStudent();
+    createAndActAsRole('student');
     $this->get('/courses')->assertStatus(200);
 });
 
+
+test('student enrols a course', function () {
+    createAndActAsRole('student');
+    $this->get('/courses')->assertStatus(200);
+
+    $course = createUpcomingCourse();
+    $this->get(route('courses.show', $course->first()->slug))
+        ->assertSee($course->first()->title)
+        ->assertSee('Enroll Now');
+});
 
 // todo add test when no courses exist

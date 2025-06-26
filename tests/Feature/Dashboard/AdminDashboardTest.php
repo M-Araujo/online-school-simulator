@@ -13,13 +13,13 @@ use function Pest\Laravel\get;
 uses(RefreshDatabase::class);
 
 test('dashboard shows admin partial for admin user', function () {
-    createAndActAsAdmin();
+    createAndActAsRole('admin');
     $response = get('/dashboard');
     $response->assertSee('Users Overview');
 });
 
 test('admin sees the stats of the users overview', function () {
-    createAndActAsAdmin();
+    createAndActAsRole('admin');
     User::factory()->count(4)->create(['role' => 'admin']);
     User::factory()->count(20)->create(['role' => 'teacher']);
     User::factory()->count(30)->create(['role' => 'student']);
@@ -32,7 +32,7 @@ test('admin sees the stats of the users overview', function () {
 });
 
 test('admin sees the stats of the course overview', function () {
-    createAndActAsAdmin();
+    createAndActAsRole('admin');
 
     Course::factory()->count(10)->create([
         'is_published' => true,

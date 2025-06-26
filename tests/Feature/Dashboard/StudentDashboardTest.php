@@ -13,7 +13,7 @@ use function Pest\Laravel\get;
 uses(RefreshDatabase::class);
 
 test('dashboard shows studentpartial for students', function () {
-    createAndActAsStudent();
+    createAndActAsRole('student');
     $response = get('/dashboard');
     $response->assertSee('Current Courses');
 });

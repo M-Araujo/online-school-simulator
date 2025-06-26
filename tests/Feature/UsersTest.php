@@ -3,7 +3,7 @@
 use App\Models\User;
 
 test('loads the users data', function () {
-    createAndActAsAdmin();
+    createAndActAsRole('admin');
     $users = createRecords(User::class, 3);
     $response = $this->get('/users');
     foreach ($users as $user) {
@@ -14,7 +14,7 @@ test('loads the users data', function () {
 
 test('users index return paginated results', function () {
     createRecords(User::class, 25);
-    createAndActAsAdmin();
+    createAndActAsRole('admin');
     $this->get('/users')
         ->assertSee(User::find(1)->name)
         ->assertSee(User::find(10)->name)
@@ -23,12 +23,12 @@ test('users index return paginated results', function () {
 });
 
 test('teachers should not access users page', function () {
-    createAndActAsTeacher();
+    createAndActAsRole('teacher');
     $this->get('/users')->assertRedirect('/dashboard');
 });
 
 test('students should not access users page', function () {
-    createAndActAsStudent();
+    createAndActAsRole('student');
     $this->get('/users')->assertRedirect('/dashboard');
 });
 

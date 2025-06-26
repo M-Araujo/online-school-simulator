@@ -8,22 +8,11 @@ use Illuminate\Testing\TestResponse;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 
-function createAndActAsAdmin(): User {
-    $admin = User::factory()->create(['role' => 'admin']);
-    test()->actingAs($admin);
-    return $admin;
-}
 
-function createAndActAsTeacher(): User {
-    $teacher = User::factory()->create(['role' => 'teacher']);
-    test()->actingAs($teacher);
-    return $teacher;
-}
-
-function createAndActAsStudent(): User {
-    $student = User::factory()->create(['role' => 'student']);
-    test()->actingAs($student);
-    return $student;
+function createAndActAsRole(string $role): User {
+    $user = User::factory()->create(['role' => $role]);
+    test()->actingAs($user);
+    return $user;
 }
 
 function createRecords(string $modelClass, int $count = 1, array $attributes = []): Collection|Model {
@@ -54,4 +43,15 @@ function assertCoursesVisible(TestResponse $response, iterable $courses): TestRe
         $response->assertSee(Str::limit($course->description, 100));
     }
     return $response;
+}
+
+
+function createUpcomingCourse(): Course {
+    $teacher = User::factory()->create(['role' => 'teacher']);
+    return Course::factory()->create([
+        'teacher_id' => $teacher->id,
+        'is_published' => true,
+        'start_date' => now()->addDays(3),
+        'end_date' => now()->addWeeks(1),
+    ]);
 }

@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 uses(RefreshDatabase::class);
 
 test('admins enter the page and see a list of items', function () {
-    createAndActAsAdmin();
+    createAndActAsRole('admin');
     $courses = createRecords(Course::class, 3);
     $response = $this->get('/courses')
         ->assertStatus(200)
@@ -16,11 +16,11 @@ test('admins enter the page and see a list of items', function () {
 });
 
 test('loads the course data for admin users', function () {
-    createAndActAsAdmin();
+    createAndActAsRole('admin');
     $this->get('/courses')->assertStatus(200);
 });
 
 test('guarantees the admin cannot see the my courses page', function () {
-    createAndActAsAdmin();
+    createAndActAsRole('admin');
     $this->get('/student-courses')->assertRedirect('/dashboard');
 });
