@@ -95,7 +95,7 @@ test('enroll button should disappear after the student’s enrollment', function
         'course_id' => $course->id,
     ]);
 
-    // 🔑 Re-authenticate for the final request
+    // Re-authenticate for the final request
     $this->actingAs($student);
 
     $response = $this->get(route('courses.show', $course->slug));
@@ -107,16 +107,12 @@ test('enroll should return an error if the student is already enrolled on that c
     $student = createAndActAsRole('student');
     $course = createUpcomingCourse();
 
-    $this->get('/courses')->assertStatus(200);
-
     $this->get(route('courses.show', $course->slug))
         ->assertSee($course->title)
         ->assertSee('Enroll Now');
 
-    // First enrollment attempt
-    $response = $this->post(route('enrollments.store'), [
-        'course_id' => $course->id,
-    ]);
+    // First enrollment attempt - should succeed
+    $response = $this->post(route('enrollments.store'), ['course_id' => $course->id]);
     $response->assertRedirect(route('courses.show', $course->slug));
 
     $this->assertDatabaseHas('enrollments', [
@@ -124,18 +120,26 @@ test('enroll should return an error if the student is already enrolled on that c
         'course_id' => $course->id,
     ]);
 
-    // Second enrollment attempt (should fail)
-    $response = $this->post(route('enrollments.store'), [
-        'course_id' => $course->id,
-    ]);
+    // Second enrollment attempt - should fail with error
+    $response = $this->post(route('enrollments.store'), ['course_id' => $course->id]);
     $response->assertRedirect(route('courses.show', $course->slug));
+    $response->assertSessionHasErrors([
+        'course_id' => 'You are already enrolled in this course.'
+    ]);
 
-    // Check for error message in session
-    $response->assertSessionHas('error', 'Current user is already enrolled on this course.');
-
-    // Optionally, follow the redirect and check if error message is displayed on page
+    // Follow the redirect and verify error message is visible on the page
     $followUpResponse = $this->get(route('courses.show', $course->slug));
-    $followUpResponse->assertSee('Error: current user is already enrolled on this course.');
+    $followUpResponse->assertSee('You are already enrolled in this course.');
 });
 
-// todo add test when no courses exist
+
+test('a student with no enrollments sees a friendly message', function () {
+    $student = createAndActAsRole('student');
+
+    $this->assertCount(0, $student->enrolledCourses);
+
+    $response = $this->get('/student-courses');
+
+    $response->assertOk()
+        ->assertSee('You’re not enrolled in any courses yet.');
+});

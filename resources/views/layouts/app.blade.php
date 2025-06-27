@@ -38,15 +38,29 @@
     </div>
 
     @if(session('success'))
-    <div 
-        x-data="{ show: true }" 
-        x-init="setTimeout(() => show = false, 3000)" 
-        x-show="show" 
-        class="fixed top-5 right-5 bg-green-500 text-white px-4 py-2 rounded shadow-lg transition"
-    >
-        {{ session('success') }}
-    </div>
-@endif
+        <div 
+            x-data="{ show: true }" 
+            x-init="setTimeout(() => show = false, 3000)" 
+            x-show="show" 
+            class="fixed top-5 right-5 bg-green-500 text-white px-4 py-2 rounded shadow-lg transition"
+        >
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if ($errors->any())
+        <div 
+            x-data="{ show: true }" 
+            x-init="setTimeout(() => show = false, 5000)" 
+            x-show="show" 
+            class="fixed top-5 right-5 bg-red-600 text-white px-4 py-2 rounded shadow-lg transition"
+        >
+            @foreach ($errors->all() as $error)
+                {{ $error }}
+            @endforeach
+        </div>
+        @endif
+
 </body>
 
 </html>

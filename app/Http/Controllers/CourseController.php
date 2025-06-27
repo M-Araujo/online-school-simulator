@@ -7,6 +7,7 @@ use App\Models\Enrollment;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\EnrollStudentRequest;
 
 class CourseController extends Controller {
 
@@ -33,7 +34,7 @@ class CourseController extends Controller {
         return view('courses.student-courses')->with(compact('items'));
     }
 
-    public function enrollStudent(Request $request) {
+    public function enrollStudent(EnrollStudentRequest $request) {
         Enrollment::create(['user_id' => $this->authenticatedUser->id, 'course_id' => $request->input('course_id')]);
         return redirect()->back()->with('success', 'Enrollment successful!');
     }
