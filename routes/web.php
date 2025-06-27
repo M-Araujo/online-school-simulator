@@ -23,7 +23,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::middleware('isStudentMiddleware')->group(function () {
         Route::get('/student-courses', [CourseController::class, 'studentCourses'])->name('student.courses');
-
         Route::post('enrollments', [CourseController::class, 'enrollStudent'])->name('enrollments.store');
     });
 

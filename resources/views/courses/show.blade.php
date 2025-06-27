@@ -35,7 +35,8 @@
                     </p>
                 </div>
 
-                @if(auth()->user()?->isStudent() && isUpcomingCourse($item))
+               
+                @if(canUserApply($user, $item))
                 <form method="POST" action="{{ route('enrollments.store') }}" class="pt-8 border-t border-gray-200 dark:border-gray-700">
                     @csrf
                     <input type="hidden" name="course_id" value={{$item->id}}>
