@@ -36,7 +36,7 @@
                 </div>
 
                
-                @if(canUserApply($user, $item))
+                @if(canUserApply($authenticatedUser, $item))
                 <form method="POST" action="{{ route('enrollments.store') }}" class="pt-8 border-t border-gray-200 dark:border-gray-700">
                     @csrf
                     <input type="hidden" name="course_id" value={{$item->id}}>
