@@ -4,17 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use App\Models\Enrollment;
-use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\EnrollStudentRequest;
 
 class CourseController extends Controller {
-
-    protected $authenticatedUser;
-    public function __construct() {
-        $this->authenticatedUser = Auth::user();
-    }
 
     public function index(): View {
         $items = Course::paginate(6);
@@ -23,14 +16,11 @@ class CourseController extends Controller {
 
     public function show(string $slug): View {
         $item = Course::where('slug', $slug)->firstOrFail();
-        return view('courses.show')->with([
-            'item' => $item,
-            'authenticatedUser' => $this->authenticatedUser,
-        ]);
+        return view('courses.show')->with(compact('item'));
     }
 
     public function studentCourses(): View {
-        $items = $this->authenticatedUser->enrolledCourses;
+        $items = $this->authenticatedUser->enrolledCourses()->paginate(6);
         return view('courses.student-courses')->with(compact('items'));
     }
 

@@ -10,32 +10,36 @@
                 </h2>
 
                 @if (!empty($item->description))
-                <div class="space-y-2">
-                    <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300">Description</h3>
-                    <p class="text-base text-gray-600 dark:text-gray-400 leading-relaxed">
-                        {{ $item->description }}
-                    </p>
-                </div>
+                    <div class="space-y-2">
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300">Description</h3>
+                        <p class="text-base text-gray-600 dark:text-gray-400 leading-relaxed">
+                            {{ $item->description }}
+                        </p>
+                    </div>
                 @endif
 
                 <div class="pt-6 border-t border-gray-200 dark:border-gray-700 space-y-2">
                     <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300">Schedule</h3>
                     <p class="text-sm text-gray-600 dark:text-gray-400">
-                        <strong class="text-gray-700 dark:text-gray-300">Starts:</strong> {{ $item->start_date->format('F j, Y') }}
+                        <strong class="text-gray-700 dark:text-gray-300">Starts:</strong>
+                        {{ $item->start_date->format('F j, Y') }}
                     </p>
                     <p class="text-sm text-gray-600 dark:text-gray-400">
-                        <strong class="text-gray-700 dark:text-gray-300">Ends:</strong> {{ $item->end_date->format('F j, Y') }}
+                        <strong class="text-gray-700 dark:text-gray-300">Ends:</strong>
+                        {{ $item->end_date->format('F j, Y') }}
                     </p>
                 </div>
 
-                @if(canUserApply($authenticatedUser, $item))
-                <form method="POST" action="{{ route('enrollments.store') }}" class="pt-8 border-t border-gray-200 dark:border-gray-700">
-                    @csrf
-                    <input type="hidden" name="course_id" value={{$item->id}}>
-                    <button type="submit" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm px-6 py-3 rounded-xl shadow-lg transition-all duration-200">
-                        Enroll Now
-                    </button>
-                </form>
+                @if (canUserApply($authenticatedUser, $item))
+                    <form method="POST" action="{{ route('enrollments.store') }}"
+                        class="pt-8 border-t border-gray-200 dark:border-gray-700">
+                        @csrf
+                        <input type="hidden" name="course_id" value={{ $item->id }}>
+                        <button type="submit"
+                            class="mt-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm px-6 py-3 rounded-xl shadow-lg transition-all duration-200">
+                            Enroll Now
+                        </button>
+                    </form>
                 @endif
 
             </div>
