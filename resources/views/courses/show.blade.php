@@ -1,20 +1,14 @@
 <x-app-layout>
-    <x-slot name="header">
-        <x-page-title title="Course Details" />
-    </x-slot>
-
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
 
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
-                <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Courses List</h3>
+                <x-page-title title="Course Details" class="mb-6" />
 
-                {{-- Title --}}
                 <h2 class="text-4xl font-bold text-gray-900 dark:text-white tracking-tight">
                     {{ $item->title }}
                 </h2>
 
-                {{-- Description --}}
                 @if (!empty($item->description))
                 <div class="space-y-2">
                     <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300">Description</h3>
@@ -24,7 +18,6 @@
                 </div>
                 @endif
 
-                {{-- Course Dates --}}
                 <div class="pt-6 border-t border-gray-200 dark:border-gray-700 space-y-2">
                     <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300">Schedule</h3>
                     <p class="text-sm text-gray-600 dark:text-gray-400">
@@ -35,7 +28,6 @@
                     </p>
                 </div>
 
-               
                 @if(canUserApply($authenticatedUser, $item))
                 <form method="POST" action="{{ route('enrollments.store') }}" class="pt-8 border-t border-gray-200 dark:border-gray-700">
                     @csrf

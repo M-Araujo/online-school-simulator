@@ -1,16 +1,11 @@
 <x-app-layout>
-    <x-slot name="header">
-        <x-page-title title="Dashboard"></x-page-title>
-    </x-slot>
-
     <div class="py-12">
+     
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
-                <h1 class="text-3xl font-semibold text-gray-900 dark:text-gray-100 mb-6">
-                    Welcome, {{ auth()->user()->name }}!
-                </h1>
+                <x-page-title title="Welcome, {{ auth()->user()->name }}!" class="mb-6" />
 
-                <div class="py-12">
+                <div>
                     @if(auth()->user()->isAdmin())
                     @include('dashboard.partials.admin')
 

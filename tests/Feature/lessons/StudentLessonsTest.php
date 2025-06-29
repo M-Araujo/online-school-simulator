@@ -2,6 +2,17 @@
 
 namespace Tests\Feature\Lessons;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
+('display lessons ', function(){
+});
 
-uses(RefreshDatabase::class);
+('', function(){
+});
+
+('', function(){
+});
+
+('', function(){
+});
+
+('', function(){
+});
