@@ -8,11 +8,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Lesson extends Model {
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
         'title',
         'content',
