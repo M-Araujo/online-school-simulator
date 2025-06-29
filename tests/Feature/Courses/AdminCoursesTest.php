@@ -1,9 +1,6 @@
 <?php
 
 use App\Models\Course;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-
-uses(RefreshDatabase::class);
 
 test('admins enter the page and see a list of items', function () {
     createAndActAsRole('admin');

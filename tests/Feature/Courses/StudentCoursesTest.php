@@ -1,10 +1,6 @@
 <?php
 
 use App\Models\Course;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-
-uses(RefreshDatabase::class);
-
 
 test('students should be able to see the enroll button', function () {
     createRecords(Course::class, 3);

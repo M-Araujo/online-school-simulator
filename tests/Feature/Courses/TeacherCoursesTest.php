@@ -1,9 +1,5 @@
 <?php
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-
-uses(RefreshDatabase::class);
-
 test('loads the course data for teacher users', function () {
     createAndActAsRole('teacher');
     $this->get('/courses')->assertStatus(200);

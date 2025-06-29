@@ -2,15 +2,10 @@
 
 namespace Tests\Feature\Dashboard;
 
-use Tests\TestCase;
 use App\Models\User;
-use App\Models\Course;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\get;
-
-uses(RefreshDatabase::class);
 
 test('dashboard is accessible for authenticated user', function () {
     $user = User::factory()->create();
