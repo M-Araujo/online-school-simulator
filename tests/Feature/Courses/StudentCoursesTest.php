@@ -177,3 +177,32 @@ test('if is a student and has enrolled on the course, list button displays Conti
         ->assertSee($course->title)
         ->assertSee('Continue learning');
 });
+
+
+test('if is a student and has enrolled on the course, the lessons should appear visible on the course details page', function () {
+
+    $student = createAndActAsRole('student');
+    $course = createCourseWithLessons();
+
+    $this->get(route('courses.show', $course->slug))
+        ->assertOk()
+        ->assertSee($course->title)
+        ->assertSee('Enroll Now');
+
+    $response = $this->post(route('enrollments.store'), [
+        'course_id' => $course->id,
+    ]);
+
+    $response->assertRedirect(route('courses.show', $course->slug));
+    $response->assertSessionHas('success', 'Enrollment successful!');
+
+    $this->assertDatabaseHas('enrollments', [
+        'user_id' => $student->id,
+        'course_id' => $course->id,
+    ]);
+
+
+    $this->get(route('courses.show', $course->slug))
+        ->assertOk()
+        ->assertSee('Lesson n');
+});

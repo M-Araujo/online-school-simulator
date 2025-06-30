@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use App\Models\Lesson;
 use App\Models\Course;
 use App\Models\Enrollment;
 use Illuminate\Support\Str;
@@ -19,13 +20,20 @@ function createRecords(string $modelClass, int $count = 1, array $attributes = [
     return $modelClass::factory()->count($count)->create($attributes);
 }
 
-function createCoursesForTeacher(User $teacher, int $count, array $overrides = []): Collection {
-    return Course::factory()->count($count)->create(array_merge([
-        'teacher_id' => $teacher->id,
-        'is_published' => true,
-        'start_date' => now()->subWeek(),
-        'end_date' => now()->addWeek(),
-    ], $overrides));
+function createCoursesWithLessonsForTeacher(User $teacher, int $count, array $overrides = [], int $lessonsCount = 3): Collection {
+    return Course::factory()
+        ->count($count)
+        ->create(array_merge([
+            'teacher_id' => $teacher->id,
+            'is_published' => true,
+            'start_date' => now()->subWeek(),
+            'end_date' => now()->addWeek(),
+        ], $overrides))
+        ->each(function ($course) use ($lessonsCount) {
+            Lesson::factory()->count($lessonsCount)->create([
+                'course_id' => $course->id,
+            ]);
+        });
 }
 
 function enrollStudentInCourses(User $student, iterable $courses): void {
@@ -54,4 +62,15 @@ function createUpcomingCourse(): Course {
         'start_date' => now()->addDays(3),
         'end_date' => now()->addWeeks(1),
     ]);
+}
+
+
+function createCourseWithLessons(int $lessonCount = 1): Course {
+    $course = Course::factory()->create();
+
+    Lesson::factory()->count($lessonCount)->create([
+        'course_id' => $course->id,
+    ]);
+
+    return $course;
 }

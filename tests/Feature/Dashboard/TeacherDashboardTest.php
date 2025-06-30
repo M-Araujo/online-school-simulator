@@ -15,25 +15,25 @@ test('teacher dashboard displays correct course stats', function () {
     $teacher = createAndActAsRole('teacher');
 
     // active courses
-    createCoursesForTeacher($teacher, 2, [
+    createCoursesWithLessonsForTeacher($teacher, 2, [
         'start_date' => now()->subWeek(),
         'end_date' => now()->addWeek(),
     ]);
 
     // pending courses
-    createCoursesForTeacher($teacher, 1, [
+    createCoursesWithLessonsForTeacher($teacher, 1, [
         'is_published' => false,
         'start_date' => now()->addDay(),
     ]);
 
     // passed and closed courses
-    createCoursesForTeacher($teacher, 10, [
+    createCoursesWithLessonsForTeacher($teacher, 10, [
         'start_date' => now()->subMonths(3),
         'end_date' => now()->subMonths(2),
     ]);
 
     // upcomming courses
-    createCoursesForTeacher($teacher, 4, [
+    createCoursesWithLessonsForTeacher($teacher, 4, [
         'start_date' => now()->addWeek(),
         'end_date' => now()->addWeeks(3)
     ]);
