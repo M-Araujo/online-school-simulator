@@ -139,3 +139,41 @@ test('a student with no enrollments sees a friendly message', function () {
     $response->assertOk()
         ->assertSee('You’re not enrolled in any courses yet.');
 });
+
+
+test('if a student has not enrolled on the course, list button displays "Details"', function () {
+
+    createAndActAsRole('student');
+    $course = createUpcomingCourse();
+
+    $this->get('/courses')
+        ->assertSee($course->title)
+        ->assertSee('Details');
+});
+
+test('if is a student and has enrolled on the course, list button displays Continue learning', function () {
+
+    $student = createAndActAsRole('student');
+    $course = createUpcomingCourse();
+
+    $this->get(route('courses.show', $course->slug))
+        ->assertOk()
+        ->assertSee($course->title)
+        ->assertSee('Enroll Now');
+
+    $response = $this->post(route('enrollments.store'), [
+        'course_id' => $course->id,
+    ]);
+
+    $response->assertRedirect(route('courses.show', $course->slug));
+    $response->assertSessionHas('success', 'Enrollment successful!');
+
+    $this->assertDatabaseHas('enrollments', [
+        'user_id' => $student->id,
+        'course_id' => $course->id,
+    ]);
+
+    $this->get('/courses')
+        ->assertSee($course->title)
+        ->assertSee('Continue learning');
+});

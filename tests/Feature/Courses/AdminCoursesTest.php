@@ -21,3 +21,24 @@ test('guarantees the admin cannot see the my courses page', function () {
     createAndActAsRole('admin');
     $this->get('/student-courses')->assertRedirect('/dashboard');
 });
+
+
+test('if an admin enters the courses list button displays "Details" always', function () {
+
+    createAndActAsRole('admin');
+    $course = createUpcomingCourse();
+
+    $this->get('/courses')
+        ->assertSee($course->title)
+        ->assertSee('Details');
+});
+
+test('if an admin enters the courses list button should never display "Continue learning"', function () {
+
+    createAndActAsRole('admin');
+    $course = createUpcomingCourse();
+
+    $this->get('/courses')
+        ->assertSee($course->title)
+        ->assertDontSee('Continue learning');
+});

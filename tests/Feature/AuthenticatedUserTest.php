@@ -17,13 +17,12 @@ it('shares authenticatedUser variable in all authenticated views', function () {
         route('users.index'),
         route('courses.show', $this->course->slug),
     ];
+    // disregard post routes
 
     $assertionRun = false;
 
     foreach ($authenticatedRoutes as $route) {
         $response = $this->get($route);
-
-        info("Route: $route, Status: " . $response->status());
 
         if ($response->status() === 200) {
             $response->assertViewHas('authenticatedUser');
@@ -32,8 +31,6 @@ it('shares authenticatedUser variable in all authenticated views', function () {
             expect($viewUser->id)->toBe($this->user->id);
 
             $assertionRun = true;
-        } elseif ($response->status() === 302) {
-            info('Redirect location: ' . $response->headers->get('Location'));
         }
     }
 
