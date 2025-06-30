@@ -17,4 +17,8 @@ class Lesson extends Model {
         'created_at',
         'updated_at'
     ];
+
+    public function course() {
+        return $this->hasOne(Course::class, 'course_id');
+    }
 }

@@ -42,6 +42,16 @@
                     </form>
                 @endif
 
+                @can('viewLessons', $item)
+                @if ($item->lessons)
+                    <div>
+                        Lessons:
+                        @foreach ($item->lessons as $lesson)
+                            <div>{{ $lesson->title }}</div>
+                        @endforeach
+                    </div>
+                @endif
+            @endcan
             </div>
         </div>
     </div>
