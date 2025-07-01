@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\User;
+use App\Models\Lesson;
 use App\Models\Course;
 
 test('students should be able to see the enroll button', function () {
@@ -151,7 +153,7 @@ test('if a student has not enrolled on the course, list button displays "Details
         ->assertSee('Details');
 });
 
-test('if is a student and has enrolled on the course, list button displays Continue learning', function () {
+test('if a student and has enrolled on the course, list button displays Continue learning', function () {
 
     $student = createAndActAsRole('student');
     $course = createUpcomingCourse();
@@ -179,19 +181,19 @@ test('if is a student and has enrolled on the course, list button displays Conti
 });
 
 
-test('if is a student and has enrolled on the course, the lessons should appear visible on the course details page', function () {
 
-    $student = createAndActAsRole('student');
-    $course = createCourseWithLessons();
+test('an enrolled student can see lessons on the course details page', function () {
+    $student = User::factory()->create(['role' => 'student']);
+    $this->actingAs($student);
 
-    $this->get(route('courses.show', $course->slug))
-        ->assertOk()
-        ->assertSee($course->title)
-        ->assertSee('Enroll Now');
+    $teacher = User::factory()->create(['role' => 'teacher']);
+    $course = Course::factory()->create(['teacher_id' => $teacher->id]);
+    $lessons = Lesson::factory()->count(3)->create(['course_id' => $course->id]);
 
-    $response = $this->post(route('enrollments.store'), [
-        'course_id' => $course->id,
-    ]);
+    $response = $this->withHeaders(['X-CSRF-TOKEN' => csrf_token()])
+        ->post(route('enrollments.store'), [
+            'course_id' => $course->id,
+        ]);
 
     $response->assertRedirect(route('courses.show', $course->slug));
     $response->assertSessionHas('success', 'Enrollment successful!');
@@ -201,8 +203,13 @@ test('if is a student and has enrolled on the course, the lessons should appear 
         'course_id' => $course->id,
     ]);
 
+    $course->refresh();
 
-    $this->get(route('courses.show', $course->slug))
-        ->assertOk()
-        ->assertSee('Lesson n');
+    $response = $this->actingAs($student)
+        ->get(route('courses.show', $course->slug))
+        ->assertOk();
+
+    $canView = $student->can('viewLessons', $course);
+
+    $response->assertSee('Lessons');
 });

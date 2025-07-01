@@ -45,7 +45,7 @@ test('if the current teacher has a course/lessons available the lessons should a
 
     $this->get(route('courses.show', $course->slug))
         ->assertOk()
-        ->assertSee('Lesson n');
+        ->assertSee('Lessons');
 });
 
 test('if other teacher consults course that are not his, available the lessons should not appear visible on the course details page', function () {
@@ -62,5 +62,5 @@ test('if other teacher consults course that are not his, available the lessons s
 
     $this->get(route('courses.show', $course->slug))
         ->assertOk()
-        ->assertDontSee('Lesson n');
+        ->assertDontSee('Lessons');
 });

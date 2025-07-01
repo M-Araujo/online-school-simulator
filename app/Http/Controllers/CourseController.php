@@ -15,7 +15,7 @@ class CourseController extends Controller {
     }
 
     public function show(string $slug): View {
-        $item = Course::where('slug', $slug)->firstOrFail();
+        $item = Course::with('lessons')->where('slug', $slug)->firstOrFail();
         return view('courses.show')->with(compact('item'));
     }
 
@@ -25,7 +25,10 @@ class CourseController extends Controller {
     }
 
     public function enrollStudent(EnrollStudentRequest $request) {
+        $course = Course::findOrFail($request->input('course_id'));
+
         Enrollment::create(['user_id' => $this->authenticatedUser->id, 'course_id' => $request->input('course_id')]);
-        return redirect()->back()->with('success', 'Enrollment successful!');
+        return redirect()->route('courses.show', $course->slug)
+            ->with('success', 'Enrollment successful!');
     }
 }
