@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\User;
-use App\Models\Lesson;
 use App\Models\Course;
 
 test('students should be able to see the enroll button', function () {
@@ -182,4 +181,36 @@ test('an enrolled student can see lessons on the course details page', function 
 
     $this->assertTrue($student->can('viewLessons', $course));
     $response->assertSee('Lessons');
+    foreach ($course->lessons as $lesson) {
+        $response->assertSee($lesson->title);
+    }
+});
+
+
+test('a student who is not enrolled cannot view the lessons of a course', function () {
+    $teacher = createAndActAsRole('teacher');
+    $course = createCoursesWithLessonsForTeacher($teacher, 1,  [
+        'start_date' => now()->addDays(1),
+        'is_published' => true,
+    ], 2)->first();
+
+    $enrolledStudent = User::factory()->create(['role' => 'student']);
+    createRecords(App\Models\Enrollment::class, 1, [
+        'user_id' => $enrolledStudent->id,
+        'course_id' => $course->id,
+    ]);
+
+    $visitorStudent = createAndActAsRole('student');
+    $this->assertFalse($visitorStudent->enrolledCourses()->where('course_id', $course->id)->exists());
+
+    $response = $this->actingAs($visitorStudent)
+        ->get(route('courses.show', $course->slug));
+
+    $response->assertSee($course->title);
+    $response->assertSee('Enroll Now');
+    $response->assertDontSee('Lessons');
+
+    foreach ($course->lessons as $lesson) {
+        $response->assertDontSee($lesson->title);
+    }
 });

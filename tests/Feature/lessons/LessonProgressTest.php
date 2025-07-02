@@ -2,10 +2,9 @@
 
 namespace Tests\Feature\Lessons;
 
+use App\Models\User;
 
 // validate the names list 
-// create migration
-// create model
 // create factory
 // test for display the video
 // ...
