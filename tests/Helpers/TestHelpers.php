@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 use Illuminate\Testing\TestResponse;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
-
+use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 function createAndActAsRole(string $role): User {
     $user = User::factory()->create(['role' => $role]);
@@ -36,7 +36,19 @@ function createCoursesWithLessonsForTeacher(User $teacher, int $count, array $ov
         });
 }
 
-function enrollStudentInCourses(User $student, iterable $courses): void {
+function enrollStudentAndAssert(BaseTestCase $testCase, User $student, Course $course): TestResponse {
+    $response = $testCase->actingAs($student)
+        ->withHeaders(['X-CSRF-TOKEN' => csrf_token()])
+        ->post(route('enrollments.store'), [
+            'course_id' => $course->id,
+        ]);
+
+    $response->assertRedirect(route('courses.show', $course->slug));
+    $response->assertSessionHas('success', 'Enrollment successful!');
+    return $response;
+}
+
+function seedEnrollmentsForStudent(User $student, iterable $courses): void {
     foreach ($courses as $course) {
         createRecords(Enrollment::class, 1, [
             'user_id' => $student->id,
