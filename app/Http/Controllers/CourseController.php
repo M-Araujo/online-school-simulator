@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use App\Models\Enrollment;
+use Illuminate\Support\Facades\Log;
 use App\Jobs\InitializeLessonProgress;
 use Illuminate\Contracts\View\View;
 use App\Http\Requests\EnrollStudentRequest;
@@ -16,7 +17,11 @@ class CourseController extends Controller {
     }
 
     public function show(string $slug): View {
-        $item = Course::with('lessons')->where('slug', $slug)->firstOrFail();
+        $user = $this->authenticatedUser;
+        $item = Course::with(['lessons.progress' => function ($query) use ($user) {
+            $query->where('user_id', $user->id);
+        }])->where('slug', $slug)->firstOrFail();
+
         return view('courses.show')->with(compact('item'));
     }
 
@@ -31,14 +36,13 @@ class CourseController extends Controller {
 
         try {
             $course = Course::findOrFail($courseId);
+            $message = ['success' => __('Enrollment successful!')];
 
             Enrollment::create(['user_id' => $user->id, 'course_id' => $courseId]);
             InitializeLessonProgress::dispatch($user, $course);
-            $message = ['success' => __('Enrollment successful!')];
         } catch (\Throwable $e) {
-            \Log::error("Failed to enroll user {$user->id} in course {$courseId}: {$e->getMessage()}");
-
             $message = ['error' => __('Enrollment failed. Please try again later.')];
+            Log::error("Failed to enroll user {$user->id} in course {$courseId}: {$e->getMessage()}");
         }
 
         return redirect()->route('courses.show', $course->slug)->with($message);

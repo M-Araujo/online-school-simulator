@@ -4,11 +4,11 @@ namespace App\Jobs;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use App\Models\LessonProgress;
 use App\Models\Course;
 use App\Models\User;
-
 
 class InitializeLessonProgress implements ShouldQueue {
     use Queueable;
@@ -36,9 +36,9 @@ class InitializeLessonProgress implements ShouldQueue {
                 }
             });
 
-            \Log::info("Initialized lesson progress for user {$this->user->id} in course {$this->course->id}");
+            Log::info("Initialized lesson progress for user {$this->user->id} in course {$this->course->id}");
         } catch (\Throwable $e) {
-            \Log::error("Failed to initialize lesson progress for user {$this->user->id}: {$e->getMessage()}");
+            Log::error("Failed to initialize lesson progress for user {$this->user->id}: {$e->getMessage()}");
             throw $e;
         }
     }
