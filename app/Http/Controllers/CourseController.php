@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use App\Models\Enrollment;
+use App\Services\LessonService;
 use Illuminate\Support\Facades\Log;
 use App\Jobs\InitializeLessonProgress;
 use Illuminate\Contracts\View\View;
@@ -21,6 +22,9 @@ class CourseController extends Controller {
         $item = Course::with(['lessons.progress' => function ($query) use ($user) {
             $query->where('user_id', $user->id);
         }])->where('slug', $slug)->firstOrFail();
+
+        $lessonService = new LessonService();
+        $currentLesson = $lessonService->getCurrentLesson($item);
 
         return view('courses.show')->with(compact('item'));
     }
