@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use App\Models\Enrollment;
+use App\Jobs\InitializeLessonProgress;
 use Illuminate\Contracts\View\View;
 use App\Http\Requests\EnrollStudentRequest;
 
@@ -25,10 +26,21 @@ class CourseController extends Controller {
     }
 
     public function enrollStudent(EnrollStudentRequest $request) {
-        $course = Course::findOrFail($request->input('course_id'));
+        $courseId = $request->input('course_id');
+        $user = $this->authenticatedUser;
 
-        Enrollment::create(['user_id' => $this->authenticatedUser->id, 'course_id' => $request->input('course_id')]);
-        return redirect()->route('courses.show', $course->slug)
-            ->with('success', 'Enrollment successful!');
+        try {
+            $course = Course::findOrFail($courseId);
+
+            Enrollment::create(['user_id' => $user->id, 'course_id' => $courseId]);
+            InitializeLessonProgress::dispatch($user, $course);
+            $message = ['success' => __('Enrollment successful!')];
+        } catch (\Throwable $e) {
+            \Log::error("Failed to enroll user {$user->id} in course {$courseId}: {$e->getMessage()}");
+
+            $message = ['error' => __('Enrollment failed. Please try again later.')];
+        }
+
+        return redirect()->route('courses.show', $course->slug)->with($message);
     }
 }

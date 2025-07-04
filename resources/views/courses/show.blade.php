@@ -35,7 +35,12 @@
                     </form>
                 @endif
                 @can('viewLessons', $item)
+                    
                     @if ($item->lessons)
+                    <video id="current-lesson" width="640" height="360" controls>
+                        <source src="{{$item->lessons->first()->video_url}}" type="video/mp4"></source>
+                        Your browser does not support the video tag
+                    </video>
                         <div>
                             Lessons:
                             @foreach ($item->lessons as $lesson)
