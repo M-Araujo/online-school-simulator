@@ -26,7 +26,7 @@ class CourseController extends Controller {
         $lessonService = new LessonService();
         $currentLesson = $lessonService->getCurrentLesson($item);
 
-        return view('courses.show')->with(compact('item'));
+        return view('courses.show')->with(compact('item', 'currentLesson'));
     }
 
     public function studentCourses(): View {

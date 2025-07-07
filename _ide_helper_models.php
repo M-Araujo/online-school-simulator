@@ -25,6 +25,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $start_date
  * @property \Illuminate\Support\Carbon|null $end_date
  * @property string $schedule
+ * @property string|null $intro_video_url
  * @property int $is_published
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -43,6 +44,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Course whereDurationHours($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Course whereEndDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Course whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Course whereIntroVideoUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Course whereIsPublished($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Course whereSchedule($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Course whereSlug($value)

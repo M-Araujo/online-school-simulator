@@ -10,13 +10,11 @@ use App\Models\User;
 use Database\Factories\CourseFactory;
 
 
-class CourseSeeder extends Seeder
-{
+class CourseSeeder extends Seeder {
     /**
      * Run the database seeds.
      */
-    public function run(): void
-    {
+    public function run(): void {
         $courses = [
             [
                 'title' => 'Full-Stack Web Development with Laravel & Vue.js',
@@ -75,6 +73,7 @@ class CourseSeeder extends Seeder
                     'days' => ['Monday', 'Wednesday', 'Friday'],
                     'time' => '10:00 AM - 12:00 PM',
                 ]),
+                'intro_video_url' => 'https://www.w3schools.com/html/mov_bbb.mp4',
                 'is_published' => true
             ]);
         }
