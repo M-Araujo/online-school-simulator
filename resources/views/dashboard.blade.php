@@ -5,16 +5,8 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
                 <x-page-title title="Welcome, {{ auth()->user()->name }}!" class="mb-6" />
 
-                <div>
-                    @if(auth()->user()->isAdmin())
-                    @include('dashboard.partials.admin')
-
-                    @elseif(auth()->user()->isTeacher())
-                    @include('dashboard.partials.teacher')
-
-                    @else
-                    @include('dashboard.partials.student')
-                    @endif
+                <div>   
+                    @include('dashboard.partials.' .auth()->user()->role )
                 </div>
             </div>
         </div>
