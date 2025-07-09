@@ -73,7 +73,7 @@ class CourseSeeder extends Seeder {
                     'days' => ['Monday', 'Wednesday', 'Friday'],
                     'time' => '10:00 AM - 12:00 PM',
                 ]),
-                'intro_video_url' => 'https://www.w3schools.com/html/mov_bbb.mp4',
+                'image' => '/images/class.jpg',
                 'is_published' => true
             ]);
         }

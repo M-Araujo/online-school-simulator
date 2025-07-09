@@ -25,7 +25,7 @@ class Course extends Model {
         'start_date',
         'end_date',
         'schedule',
-        'intro_video_url',
+        'image',
         'is_published',
         'created_at',
         'updated_at'

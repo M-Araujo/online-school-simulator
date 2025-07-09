@@ -3,45 +3,39 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
                 <x-page-title title="Course Details" class="mb-6" />
-                
+
                 <h2 class="text-4xl font-bold text-gray-900 dark:text-white tracking-tight mb-6">
                     {{ $item->title }}
                 </h2>
 
-               
-                    @if ($item->lessons && $item->lessons->isNotEmpty())
-                        <div class="flex flex-col lg:flex-row gap-6 mb-8">
-                            <div class="flex-1">
-                                @can('viewLessons', $item)
+
+                @if ($item->lessons && $item->lessons->isNotEmpty())
+                    <div class="flex flex-col lg:flex-row gap-6 mb-8">
+                        <div class="flex-1">
+                            @can('viewLessons', $item)
                                 <video id="current-lesson" class="w-full rounded-lg shadow-md" controls>
                                     <source src="{{ $item->lessons->first()->video_url }}" type="video/mp4">
                                     Your browser does not support the video tag.
                                 </video>
-
-                                @else 
-
-                                <video id="current-lesson" class="w-full rounded-lg shadow-md" controls>
-                                    <source src="{{ $currentLesson->video_url }}" type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
-
-                                @endcan
-                            </div>
-
-                            <div class="w-full lg:w-1/3 bg-gray-100 dark:bg-gray-900 p-4 rounded-lg shadow-inner">
-                                <h4 class="text-lg font-semibold mb-3 text-gray-800 dark:text-gray-200">Lessons</h4>
-                                <ul class="space-y-2">
-                                    @foreach ($item->lessons as $lesson)
-                                        <li class="p-2 rounded hover:bg-blue-100 dark:hover:bg-blue-800 transition">
-                                            {{ $lesson->title }}
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </div>
+                            @else
+                                <img src="{{ asset($item->image) }}" alt="Intro Video" id="default-image">
+                            @endcan
                         </div>
-                    @endif
-                    
-              
+
+                        <div class="w-full lg:w-1/3 bg-gray-100 dark:bg-gray-900 p-4 rounded-lg shadow-inner">
+                            <h4 class="text-lg font-semibold mb-3 text-gray-800 dark:text-gray-200">Lessons</h4>
+                            <ul class="space-y-2">
+                                @foreach ($item->lessons as $lesson)
+                                    <li class="p-2 rounded hover:bg-blue-100 dark:hover:bg-blue-800 transition">
+                                        {{ $lesson->title }}
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                @endif
+
+
 
                 @if (!empty($item->description))
                     <div class="space-y-2 mb-6">

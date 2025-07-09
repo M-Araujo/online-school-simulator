@@ -48,7 +48,7 @@ test('if the current teacher has a course/lessons available the lessons should a
         ->assertSee('Lessons');
 });
 
-test('if other teacher consults course that are not his, available the lessons should not appear visible on the course details page', function () {
+test('if other teacher consults course that are not his, available the video/s related to the course should not appear visible on the course details page', function () {
 
     $authorTeacher = createAndActAsRole('teacher');
     $courses = createCoursesWithLessonsForTeacher($authorTeacher, 1, [
@@ -62,5 +62,6 @@ test('if other teacher consults course that are not his, available the lessons s
 
     $this->get(route('courses.show', $course->slug))
         ->assertOk()
-        ->assertDontSee('Lessons');
+        ->assertDontSee('current-lesson')
+        ->assertSee('default-image');
 });

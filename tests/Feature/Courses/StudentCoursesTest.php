@@ -187,7 +187,7 @@ test('an enrolled student can see lessons on the course details page', function 
 });
 
 
-test('a student who is not enrolled cannot view the lessons of a course', function () {
+test('a student who is not enrolled cannot view the video/s of a course', function () {
     $teacher = createAndActAsRole('teacher');
     $course = createCoursesWithLessonsForTeacher($teacher, 1,  [
         'start_date' => now()->addDays(1),
@@ -206,11 +206,12 @@ test('a student who is not enrolled cannot view the lessons of a course', functi
     $response = $this->actingAs($visitorStudent)
         ->get(route('courses.show', $course->slug));
 
+    $response->assertDontSee('current-lesson');
     $response->assertSee($course->title);
     $response->assertSee('Enroll Now');
-    $response->assertDontSee('Lessons');
+    $response->assertSee('default-image');
 
     foreach ($course->lessons as $lesson) {
-        $response->assertDontSee($lesson->title);
+        $response->assertSee($lesson->title);
     }
 });
