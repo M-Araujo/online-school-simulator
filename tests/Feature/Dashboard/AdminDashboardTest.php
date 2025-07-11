@@ -5,8 +5,6 @@ namespace Tests\Feature\Dashboard;
 use App\Models\User;
 use App\Models\Course;
 
-use function Pest\Laravel\get;
-
 test('dashboard shows admin partial for admin user', function () {
     createAndActAsRole('admin');
     $response = loadPageAndAssertOk('/dashboard');
