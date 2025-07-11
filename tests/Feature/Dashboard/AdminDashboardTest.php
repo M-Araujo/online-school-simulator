@@ -9,7 +9,7 @@ use function Pest\Laravel\get;
 
 test('dashboard shows admin partial for admin user', function () {
     createAndActAsRole('admin');
-    $response = get('/dashboard');
+    $response = loadPageAndAssertOk('/dashboard');
     $response->assertSee('Users Overview');
 });
 
@@ -19,7 +19,7 @@ test('admin sees the stats of the users overview', function () {
     User::factory()->count(20)->create(['role' => 'teacher']);
     User::factory()->count(30)->create(['role' => 'student']);
 
-    get('/dashboard')
+    loadPageAndAssertOk('/dashboard')
         ->assertSee('Total Users: 55')
         ->assertSee('Students: 30')
         ->assertSee('Teachers: 20')
@@ -41,7 +41,7 @@ test('admin sees the stats of the course overview', function () {
         'end_date' => now()->addWeek(),
     ]);
 
-    get('/dashboard')
+    loadPageAndAssertOk('/dashboard')
         ->assertSee('Active Courses: 10')
         ->assertSee('Pending Approvals: 2');
 });

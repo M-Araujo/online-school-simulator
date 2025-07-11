@@ -86,3 +86,8 @@ function createCourseWithLessons(int $lessonCount = 1): Course {
 
     return $course;
 }
+
+
+function loadPageAndAssertOk($uri): TestResponse {
+    return test()->get($uri)->assertStatus(200);
+}

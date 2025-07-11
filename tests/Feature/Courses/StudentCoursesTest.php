@@ -7,7 +7,7 @@ test('students should be able to see the enroll button', function () {
     createRecords(Course::class, 3);
     createAndActAsRole('student');
 
-    $response = $this->get('/courses')->assertStatus(200);
+    $response = loadPageAndAssertOk('courses');
     $response->assertSee('Details', escape: false);
 });
 
@@ -17,8 +17,7 @@ test('student sees the correct link to course details', function () {
     $course = createRecords(Course::class, 1);
     $detailsUrl = route('courses.show', $course->first()->slug);
 
-    $this->get('/courses')
-        ->assertStatus(200)
+    loadPageAndAssertOk('courses')
         ->assertSee('href="' . $detailsUrl . '"', escape: false);
 });
 
@@ -45,7 +44,7 @@ test('student sees their enrolled courses list', function () {
 
 test('loads the course data for students users', function () {
     createAndActAsRole('student');
-    $this->get('/courses')->assertStatus(200);
+    loadPageAndAssertOk('courses');
 });
 
 
@@ -53,7 +52,7 @@ test('student enrols on a course', function () {
     $student = createAndActAsRole('student');
     $course = createUpcomingCourse();
 
-    $this->get('/courses')->assertStatus(200);
+    loadPageAndAssertOk('courses');
 
     $this->get(route('courses.show', $course->slug))
         ->assertSee($course->title)
@@ -70,7 +69,7 @@ test('enroll button should disappear after the student’s enrollment', function
     $student = createAndActAsRole('student');
     $course = createUpcomingCourse();
 
-    $this->get('/courses')->assertStatus(200);
+    loadPageAndAssertOk('courses');
 
     $this->get(route('courses.show', $course->slug))
         ->assertSee($course->title)
@@ -134,7 +133,7 @@ test('if a student has not enrolled on the course, list button displays "Details
     createAndActAsRole('student');
     $course = createUpcomingCourse();
 
-    $this->get('/courses')
+    loadPageAndAssertOk('courses')
         ->assertSee($course->title)
         ->assertSee('Details');
 });
@@ -155,7 +154,7 @@ test('if a student and has enrolled on the course, list button displays Continue
         'course_id' => $course->id,
     ]);
 
-    $this->get('/courses')
+    loadPageAndAssertOk('courses')
         ->assertSee($course->title)
         ->assertSee('Continue learning');
 });

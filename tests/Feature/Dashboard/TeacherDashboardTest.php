@@ -6,7 +6,7 @@ use function Pest\Laravel\get;
 
 test('dashboard shows teacher partial for teachers', function () {
     createAndActAsRole('teacher');
-    $response = get('/dashboard');
+    $response = loadPageAndAssertOk('/dashboard');
     $response->assertSee('Your Courses');
 });
 
@@ -38,7 +38,7 @@ test('teacher dashboard displays correct course stats', function () {
         'end_date' => now()->addWeeks(3)
     ]);
 
-    $response = get('/dashboard');
+    $response = loadPageAndAssertOk('/dashboard');
     $response->assertSee('Your Courses')
         ->assertSee('Active: 2')
         ->assertSee('Pending: 1')
