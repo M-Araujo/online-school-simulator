@@ -16,21 +16,33 @@ test('a link should appear to user courses', function () {
 });
 
 
-test('the user last 3 courses should appear', function () {
+test('the user`s last 3 courses should appear', function () {
     $student = createAndActAsRole('student');
 
     $courses = createRecords(Course::class, 4);
     seedEnrollmentsForStudent($student, $courses);
 
     $response = loadPageAndAssertOk('/dashboard');
-    $courseCards = $response->dom()->filter('.user-course');
+    $content = $response->getContent();
+    $count = substr_count($content, 'user-course');
 
-    expect($courseCards->count())->toBeLessThanOrEqual(3);
+    expect($count)->toBeLessThanOrEqual(3);
 });
 
+test('if the user has no courses, no courses should appear', function () {
+    createAndActAsRole('student');
 
+    $response = loadPageAndAssertOk('/dashboard');
+    $content = $response->getContent();
+    $count = substr_count($content, 'user-course');
 
+    expect($count)->toBeEqual(0);
+});
 
-// shows users latest 3 course
-// message if user has no courses
-// 
+test('if the user has no courses, a specific message should appear', function () {
+    createAndActAsRole('student');
+
+    loadPageAndAssertOk('/dashboard');
+
+    expect('No courses enrolled yet.');
+});
