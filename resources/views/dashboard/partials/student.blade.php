@@ -1,9 +1,14 @@
 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
 
+
     <x-widget-card title="Current Courses">
-        <p class="user-course">Laravel Basics — <span class="text-green-600">60% complete</span></p>
-        <p class="user-course">Vue.js Essentials — <span class="text-yellow-500">35% complete</span></p>
-        <p class="user-course">Tailwind CSS Mastery — <span class="text-blue-500">10% complete</span></p>
+        @if(count($dashboardStats['userCourses']) > 0)
+            @foreach($dashboardStats['userCourses'] as $course)
+                <p class="user-course">{{$course->title}} — <span class="text-green-600">60% complete</span></p>
+            @endforeach
+        @else 
+            <p>No courses enrolled yet.</p>
+        @endif
         <a href="/student-courses" class="text-blue-500 hover:underline mt-2 inline-block">View All Courses</a>
     </x-widget-card>
 

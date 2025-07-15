@@ -42,7 +42,9 @@ test('if the user has no courses, no courses should appear', function () {
 test('if the user has no courses, a specific message should appear', function () {
     createAndActAsRole('student');
 
-    loadPageAndAssertOk('/dashboard');
+    $response = loadPageAndAssertOk('/dashboard');
+    $content = $response->getContent();
+    $count = substr_count($content, 'user-course');
 
     expect('No courses enrolled yet.');
 });
